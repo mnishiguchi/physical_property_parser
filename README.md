@@ -1,4 +1,8 @@
-# Apts
+# Physical property parser
+
+In this repo, I will parse physical property XML feeds into Ruby representation and place it to PostgreSQL database.
+
+---
 
 ## Environment
 

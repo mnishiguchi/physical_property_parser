@@ -13,19 +13,19 @@
 class Feed < ApplicationRecord
   belongs_to :feed_source
 
-  has_one :field_path_mapping, through: :feed_source
-
   has_many :properties
 
   validates :raw_xml, uniqueness: true
 
+  before_save :update_feed_xpaths
+
   def create_properties
-    property_xml_docs.each do |property_xml_doc|
+    property_nodes.each do |property_node|
 
       # Prepare attributes for property with field-path mapping and xml doc.
       property_attributes = PropertyAttributes.new(
-                              self.field_path_mapping.for_property,
-                              property_xml_doc
+                              FeedXpath.for_property,
+                              property_node
                             ).attributes
 
       next if property_attributes.blank?
@@ -34,7 +34,7 @@ class Feed < ApplicationRecord
       # Debug
       # ap property_attributes
 
-      floorplan_xml_docs = floorplan_xml_docs(property_xml_doc)
+      floorplan_xml_docs = floorplan_xml_docs(property_node)
       create_property_with_floorplans(property_attributes, floorplan_xml_docs)
     end
   end
@@ -47,7 +47,7 @@ class Feed < ApplicationRecord
 
       # Prepare attributes for floorplan with field-path mapping and xml doc.
       floorplan_attributes = FloorplanAttributes.new(
-                                self.field_path_mapping.for_floorplan,
+                                FeedXpath.for_floorplan,
                                 floorplan_xml_doc
                               ).attributes
 
@@ -61,12 +61,20 @@ class Feed < ApplicationRecord
   end
 
   # Returns an array of nokogiri properties.
-  private def property_xml_docs
+  private def property_nodes
     Nokogiri::XML(raw_xml).xpath("PhysicalProperty/Property")
   end
 
   # Returns an array of nokogiri floorplans.
-  private def floorplan_xml_docs(property_xml_doc)
-    property_xml_doc.xpath("Floorplan")
+  private def floorplan_xml_docs(property_node)
+    property_node.xpath("Floorplan")
+  end
+
+  # before_save
+  # Save newly occurred xpaths to the FeedXpath table.
+  private def update_feed_xpaths
+    self.xpaths.each do |xpath|
+      FeedXpath.where(xpath: xpath).first_or_create!
+    end
   end
 end

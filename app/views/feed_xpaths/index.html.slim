@@ -1,0 +1,9 @@
+= provide(:title, "Feed xpaths")
+
+h1.page-header 
+  | Feed xpaths
+
+ul [style='list-style:none']
+  - @feed_xpaths.each do |feed_xpath|
+    li 
+      pre = feed_xpath.xpath

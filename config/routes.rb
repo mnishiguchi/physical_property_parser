@@ -7,6 +7,7 @@ Rails.application.routes.draw do
 
 
   resources :feed_sources, only: [:index, :show]
+  resources :feed_xpaths, only: [:index]
   # resources :field_path_mappings, only: [:show, :edit, :update]
 
   resources :properties

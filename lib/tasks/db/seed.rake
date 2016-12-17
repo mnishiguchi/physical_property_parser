@@ -9,8 +9,7 @@ namespace :db do
     invoke_tasks [
       "db:seed_feed_sources",
       "db:import_feeds",
-      "db:seed_field_path_mappings",
-      "db:convert_feeds_to_properties",
+      # "db:convert_feeds_to_properties",
     ]
   end
 end

@@ -18,11 +18,13 @@ namespace :db do
 
     puts "Importing Feeds"
     FeedSource.all.each do |feed_source|
+      print "."
       feed_source.import_feed
     end
-
+    puts ""
     WebMock.disable!
 
     puts "Feed.count: #{Feed.count}"
+    puts "FeedXpath.count: #{FeedXpath.count}"
   end
 end

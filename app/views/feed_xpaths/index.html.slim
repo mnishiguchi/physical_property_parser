@@ -3,7 +3,22 @@
 h1.page-header 
   | Feed xpaths
 
-ul [style='list-style:none']
-  - @feed_xpaths.each do |feed_xpath|
-    li 
-      pre = feed_xpath.xpath
+#feed_xpaths.well
+  input.fuzzy-search.form-control [type="text" placeholder="Search"] /
+  hr
+  ul.list [style='list-style:none']
+    - @feed_xpaths.each do |feed_xpath|
+      li
+        p.xpath 
+          = feed_xpath.xpath
+
+javascript:
+  new List('feed_xpaths', { 
+    valueNames: ['xpath'], 
+    plugins: [ ListFuzzySearch() ] 
+  });
+
+css:
+  .xpath {
+    font-family: "Courier New", Courier, "Lucida Sans Typewriter", "Lucida Typewriter", monospace;
+  }

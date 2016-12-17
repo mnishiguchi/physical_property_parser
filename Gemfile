@@ -1,5 +1,5 @@
 source 'https://rubygems.org'
-ruby "2.3.1"
+# ruby "2.3.1"
 
 gem 'rails', '~> 5.0.0', '>= 5.0.0.1'
 gem 'pg',    '~> 0.18'
@@ -16,10 +16,10 @@ gem 'jbuilder', '~> 2.5'
 gem 'jquery-rails'
 # gem 'jquery-ui-rails'
 # gem 'kaminari', git: 'git://github.com/amatsuda/kaminari.git', branch: 'master'
-gem 'omniauth-facebook'
-gem 'omniauth-google-oauth2'
-gem 'omniauth-twitter'
-gem 'pundit'
+# gem 'omniauth-facebook'
+# gem 'omniauth-google-oauth2'
+# gem 'omniauth-twitter'
+# gem 'pundit'
 gem 'rack-cors', :require => 'rack/cors'
 gem 'sass-rails', '~> 5.0'
 gem 'simple_form'

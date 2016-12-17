@@ -1,12 +1,11 @@
 # Apts
 
-## Environment / gems
+## Environment
 
 ```
+OSX
 Ruby 2.3.1
 Rails 5.0.0
-Devise
-etc
 ```
 
 ---
@@ -26,15 +25,6 @@ rails db:seed
 ```
 
 Visit localhost:3000
-
-```yml
-user:
-  email:    "user@example.com"
-  password: "password"
-admin:
-  email:    "admin@example.com"
-  password: "password"
-```
 
 ---
 

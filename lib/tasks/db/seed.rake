@@ -7,7 +7,6 @@ namespace :db do
     end
 
     invoke_tasks [
-      "db:seed_users",
       "db:seed_feed_sources",
       "db:import_feeds",
       "db:seed_field_path_mappings",

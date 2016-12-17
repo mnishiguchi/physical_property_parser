@@ -5,29 +5,56 @@ gem 'rails', '~> 5.0.0', '>= 5.0.0.1'
 gem 'pg',    '~> 0.18'
 gem 'puma',  '~> 3.0'
 
-gem 'awesome_print'
-gem 'bcrypt', '~> 3.1.7'
-gem 'bootstrap-sass'
-gem 'coffee-rails', '~> 4.2'
-gem 'devise' # 4.2
-gem 'faker'
-gem 'font-awesome-rails'
-gem 'jbuilder', '~> 2.5'
-gem 'jquery-rails'
-# gem 'jquery-ui-rails'
-# gem 'kaminari', git: 'git://github.com/amatsuda/kaminari.git', branch: 'master'
+
+#---
+# AUTHENTICATON / AUTHORIZATION
+#---
+
+
+# gem 'devise' # 4.2
 # gem 'omniauth-facebook'
 # gem 'omniauth-google-oauth2'
 # gem 'omniauth-twitter'
 # gem 'pundit'
-gem 'rack-cors', :require => 'rack/cors'
+
+
+#---
+# ASSETS
+#---
+
+
+gem 'awesome_print'
+gem 'bootstrap-sass'
+# gem 'coffee-rails', '~> 4.2'
+gem 'faker'
+gem 'font-awesome-rails'
+# gem 'jquery-ui-rails'
+# gem 'kaminari', git: 'git://github.com/amatsuda/kaminari.git', branch: 'master'
 gem 'sass-rails', '~> 5.0'
+
+
+#---
+# TEMPLATES
+#---
+
+gem 'jbuilder', '~> 2.5'
 gem 'simple_form'
 gem 'slim-rails'
+
+
+#---
+# OTHERS
+#---
+
+
+gem 'bcrypt', '~> 3.1.7'
+gem 'jquery-rails'
+gem 'rack-cors', :require => 'rack/cors'
 gem 'strip_attributes'
 gem 'turbolinks', '~> 5'
 gem 'uglifier', '>= 1.3.0'
 gem 'webmock'
+
 
 group :development, :test do
   gem 'factory_girl_rails'

@@ -7,6 +7,7 @@ namespace :db do
     Feed.all.map do |feed|
       feed.create_properties
     end
+    puts ""
 
     puts "Property.count:  #{Property.count}"
     puts "Floorplan.count: #{Floorplan.count}"

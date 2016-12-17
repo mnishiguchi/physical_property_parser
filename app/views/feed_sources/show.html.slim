@@ -1,0 +1,11 @@
+= provide(:title, "Xpaths for #{@feed_source.url}")
+
+h1.page-header 
+  | Feed source
+  .h4.text-muted
+    = @feed_source.url
+
+= render "tabs"
+
+pre
+  = @feed_source.xpaths.join("\n")

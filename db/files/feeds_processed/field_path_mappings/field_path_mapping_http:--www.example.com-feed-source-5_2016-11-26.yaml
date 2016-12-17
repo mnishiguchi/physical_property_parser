@@ -1,0 +1,26 @@
+---
+marketing_name: " PhysicalProperty Property PropertyID MarketingName"
+website: " PhysicalProperty Property PropertyID WebSite"
+description: " PhysicalProperty Property Information LongDescription"
+contact_phone: " PhysicalProperty Property PropertyID Phone PhoneNumber"
+contact_email: " PhysicalProperty Property PropertyID Address Email"
+street: " PhysicalProperty Property PropertyID Address Address"
+city: " PhysicalProperty Property PropertyID Address City"
+state: " PhysicalProperty Property PropertyID Address State"
+zip: " PhysicalProperty Property PropertyID Address PostalCode"
+latitude: " PhysicalProperty Property ILS_Identification Latitude"
+longitude: " PhysicalProperty Property ILS_Identification Longitude"
+floorplan_name: " PhysicalProperty Property Floorplan Name"
+floorplan_square_feet: " PhysicalProperty Property Floorplan SquareFeet"
+floorplan_market_rent: " PhysicalProperty Property Floorplan MarketRent"
+floorplan_effective_rent: " PhysicalProperty Property Floorplan EffectiveRent"
+floorplan_bedrooms: " PhysicalProperty Property Floorplan Room"
+floorplan_bathrooms: " PhysicalProperty Property Floorplan Room"
+floorplan_availability: " PhysicalProperty Property Floorplan UnitsAvailable"
+file_floorplan: " PhysicalProperty Property Floorplan File"
+file_property: " PhysicalProperty Property File"
+amenities: ''
+amenities_community: ''
+amenities_floorplan: ''
+pet_dog: ''
+pet_cat: ''

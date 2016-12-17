@@ -1,0 +1,25 @@
+h1.page-header
+  = @floorplan.name || "(Unnamed)"
+
+p
+  strong Square feet:
+  = @floorplan.square_feet
+p
+  strong Market rent:
+  = @floorplan.market_rent
+p
+  strong Effective rent:
+  = @floorplan.effective_rent
+p
+  strong Bedrooms:
+  = @floorplan.bedrooms
+p
+  strong Bathrooms:
+  = @floorplan.bathrooms
+p
+  strong Availability:
+  = @floorplan.availability
+p
+  strong Floorplan amenities:
+br
+= link_to 'Back', floorplans_path

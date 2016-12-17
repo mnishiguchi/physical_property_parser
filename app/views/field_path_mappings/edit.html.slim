@@ -1,0 +1,18 @@
+= provide(:title, @field_path_mapping.class.name.titleize)
+
+= render "page_header"
+
+.pull-right
+  = link_to 'Finish editing', @field_path_mapping
+= render "tabs"
+= render 'form'
+
+javascript:
+  // Restore the scroll position before form submission.
+  $(document).on('turbolinks:load', function() {
+  
+      // Make sure that we apply this effect only for this page.
+      if (location.pathname === '/field_path_mappings/1/edit') {
+          $('body').scrollTop("#{@scroll}", 0);
+      }
+  })

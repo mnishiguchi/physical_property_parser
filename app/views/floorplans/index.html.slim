@@ -1,0 +1,26 @@
+h1.page-header
+  | All floorplans
+
+.table-responsive
+  table.table.table-bordered
+    thead
+      tr
+        th Name
+        th Square feet
+        th Market rent
+        th Effective rent
+        th Bedrooms
+        th Bathrooms
+        th Availability
+        th Floorplan amenities
+    tbody
+      - @floorplans.each do |floorplan|
+        tr
+          td = link_to floorplan.name, floorplan
+          td = floorplan.square_feet
+          td = floorplan.market_rent
+          td = floorplan.effective_rent
+          td = floorplan.bedrooms
+          td = floorplan.bathrooms
+          td = floorplan.availability
+          td

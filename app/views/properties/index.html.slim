@@ -1,0 +1,20 @@
+= provide(:title, "All properties")
+
+h1.page-header
+  | All properties
+
+.table-responsive
+  table.table.table-bordered
+    thead
+      tr
+        th name
+        th address
+        th latitude
+        th longitude
+    tbody
+      - @properties.each do |property|
+        tr
+          td = link_to property.marketing_name, property 
+          td = property.full_address
+          td = property.latitude
+          td = property.longitude

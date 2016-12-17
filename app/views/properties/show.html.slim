@@ -1,0 +1,60 @@
+= provide(:title, @property.marketing_name)
+
+h1.page-header
+  = @property.marketing_name
+p.text-muted
+  = @property.description
+
+.table-responsive
+  table.table.table-bordered
+    thead
+      tr
+        th Field
+        th Value
+    tbody
+      tr
+        td 
+          strong Website:
+        td= @property.website
+      tr
+        td 
+          strong Contact email:
+        td= @property.contact_email
+      tr
+        td 
+          strong Contact phone:
+        td= @property.contact_phone
+      tr
+        td 
+          strong Address:
+        td= @property.full_address
+      tr
+        td 
+          strong latitude:
+        td= @property.latitude
+      tr
+        td 
+          strong longitude:
+        td= @property.longitude
+      tr
+        td 
+          strong Pet dog:
+        td= @property.pet_dog
+      tr
+        td 
+          strong Pet cat:
+        td= @property.pet_cat
+      tr
+        td 
+          strong Floorplans:
+        td= @property.floorplans.map(&:id).join(',')
+      tr
+        td 
+          strong Amenities:
+        td= @property.amenities
+      tr
+        td 
+          strong Feed source url:
+        td= @property.feed.feed_source.url
+
+= link_to 'Back', properties_path

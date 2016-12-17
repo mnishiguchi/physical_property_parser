@@ -1,0 +1,21 @@
+= provide(:title, "All feed sources")
+
+h1.page-header 
+  | All feed sources
+
+table.table.table-bordered
+  thead
+    tr
+      th Source URL
+      th Updated at
+      th 
+      th 
+      th 
+  tbody
+    - @feed_sources.each do |feed_source|
+      tr
+        td= feed_source.url
+        td= feed_source.updated_at
+        td= link_to 'Xpaths', feed_source
+        td= link_to 'Field-path mapping', feed_source.field_path_mapping
+        td= link_to 'CSV', feed_source_path(feed_source, format: "csv")

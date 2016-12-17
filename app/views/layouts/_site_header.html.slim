@@ -1,0 +1,39 @@
+.site_header
+  .container
+    a#logo href="#{root_path}"
+      | APTS
+    - if identity_signed_in?
+      .nav-item
+        = current_identity.email if current_identity
+        .badge = current_identity&.backend_user_type || "User"
+      = render "layouts/logged_in_dropdown"
+      
+    - else
+      a.nav-item.pull-left[href="#{feed_sources_path}"] 
+        | All feed sources
+      a.nav-item.pull-left[href="#{properties_path}"] 
+        | All properties
+      
+      a.nav-item.pull-right[
+        data-target="#signup_modal" 
+        data-toggle="modal" 
+        type="button"
+      ] Sign up
+      #signup_modal.modal.fade[
+        aria-labelledby="signup_modal__label" 
+        role="dialog" 
+        tabindex="-1"
+      ]
+        = render "shared/signup_modal"
+      
+      a.nav-item.pull-right[
+        data-target="#login_modal" 
+        data-toggle="modal" 
+        type="button"
+      ] Log in
+      #login_modal.modal.fade[
+        aria-labelledby="login_modal__label" 
+        role="dialog" 
+        tabindex="-1"
+      ]
+        = render "shared/login_modal"

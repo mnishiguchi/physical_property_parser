@@ -3,7 +3,7 @@ class FeedSourcesController < ApplicationController
 
   # GET /feed_sources
   def index
-    @feed_sources = FeedSource.includes(:field_path_mapping).all
+    @feed_sources = FeedSource.all
   end
 
   # GET /feed_sources/1
@@ -18,7 +18,7 @@ class FeedSourcesController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_feed_source
-      @feed_source = FeedSource.includes(:field_path_mapping).find(params[:id])
+      @feed_source = FeedSource.find(params[:id])
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

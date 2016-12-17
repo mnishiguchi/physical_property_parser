@@ -41,28 +41,9 @@ module CsvHelper
       # http://ruby-doc.org/stdlib-2.0.0/libdoc/csv/rdoc/CSV.html#DEFAULT_OPTIONS
       options = { headers: true }
 
-      field_path_mapping_hash = feed_source.field_path_mapping.field_attributes
-
       output = CSV.generate(options) do |csv|
         csv << ["Source URL", feed_source.url]
         csv << ["Last updated", feed_source.updated_at]
-        csv << [""]
-        csv << ["---"]
-        csv << ["Field-path mapping that is currently set"]
-        csv << ["---"]
-        csv << ["Field name", "Xpath"]
-
-        field_path_mapping_hash.each do |field, xpath|
-          csv << [field, xpath]
-        end
-
-        csv << [""]
-        csv << ["---"]
-        csv << ["All the xpath of this feed schema"]
-        csv << ["---"]
-        feed_source.xpaths.each do |xpath|
-          csv << [xpath]
-        end
       end
 
       output

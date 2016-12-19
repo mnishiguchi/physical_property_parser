@@ -20,46 +20,51 @@ class Feed < ApplicationRecord
 
   def create_properties
     property_nodes = Nokogiri::XML(raw_xml).xpath("PhysicalProperty/Property")
+
     property_nodes.each do |property_node|
 
-      # Prepare attributes for property with field-path mapping and xml doc.
-      property_attributes = PropertyAttributes.new(
-                              FeedXpath.for_property,
-                              property_node
-                            ).attributes
-
-      # Skip if invalid
+      property_attributes = Feed.parse_property_node(property_node)
       next if property_attributes.blank?
-      next if property_attributes.fetch("marketing_name", nil).blank?
+      next if property_attributes.fetch(:marketing_name, nil).blank?
 
-      # Debug
+      # #==> Debug
       # ap property_attributes
 
       print "["
-      create_property_with_floorplans(property_attributes, property_node)
+      property = self.properties.create!(property_attributes)
+      create_floorplans_for_property(property, property_node)
       print "]"
     end
   end
 
-  private def create_property_with_floorplans(property_attributes, property_node)
-    property = self.properties.create!(property_attributes)
+  private def create_floorplans_for_property(property, property_node)
 
     property_node.xpath("Floorplan").each do |floorplan_node|
 
-      # Prepare attributes for floorplan with field-path mapping and xml doc.
-      floorplan_attributes = FloorplanAttributes.new(
-                                FeedXpath.for_floorplan,
-                                floorplan_node
-                              ).attributes
-
-      # Skip if invalid
+      floorplan_attributes = Feed.parse_floorplan_node(floorplan_node)
       next if floorplan_attributes.blank?
 
-      # Debug
+      # #==> Debug
       # ap floorplan_attributes
 
       print "."
       property.floorplans.create!(floorplan_attributes)
+    end
+  end
+
+  def self.parse_property_node(property_node)
+    self.parse_xml_node(property_node, PropertyParser.new(property_node))
+  end
+
+  def self.parse_floorplan_node(floorplan_node)
+    self.parse_xml_node(floorplan_node, FloorplanParser.new(floorplan_node))
+  end
+
+  def self.parse_xml_node(xml_node, parser)
+    {}.with_indifferent_access.tap do |attributes|
+      parser.attr_names.each do |attr_name|
+        attributes[attr_name] = parser.send(attr_name)
+      end
     end
   end
 

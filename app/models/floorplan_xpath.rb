@@ -9,8 +9,5 @@
 #  updated_at :datetime         not null
 #
 
-FactoryGirl.define do
-  factory :feed_xpath do
-    xpath "MyString"
-  end
+class FloorplanXpath < FeedXpath
 end

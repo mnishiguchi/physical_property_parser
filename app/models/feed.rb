@@ -37,7 +37,7 @@ class Feed < ApplicationRecord
     end
   end
 
-  private def create_floorplans_for_property(property, property_node)
+  def create_floorplans_for_property(property, property_node)
 
     property_node.xpath("Floorplan").each do |floorplan_node|
 

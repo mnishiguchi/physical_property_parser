@@ -10,7 +10,17 @@ Rails.application.routes.draw do
   resources :feed_xpaths, only: [:index]
 
   resources :properties
+  resources :property_xpaths, only: [:index]
+
   resources :floorplans
+
+
+  # ---
+  # Pages
+  # ---
+
+
+  get "github_search" => "static_pages#github_search"
 
 
   # ---

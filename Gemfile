@@ -19,21 +19,6 @@ gem 'puma',  '~> 3.0'
 
 
 #---
-# ASSETS
-#---
-
-
-gem 'awesome_print'
-gem 'bootstrap-sass'
-# gem 'coffee-rails', '~> 4.2'
-gem 'faker'
-gem 'font-awesome-rails'
-# gem 'jquery-ui-rails'
-# gem 'kaminari', git: 'git://github.com/amatsuda/kaminari.git', branch: 'master'
-gem 'sass-rails', '~> 5.0'
-
-
-#---
 # TEMPLATES
 #---
 
@@ -43,11 +28,28 @@ gem 'slim-rails'
 
 
 #---
+# ASSETS
+#---
+
+
+gem 'awesome_print'
+gem "browserify-rails", git: "git@github.com:browserify-rails/browserify-rails.git"
+gem 'bootstrap-sass'
+# gem 'coffee-rails', '~> 4.2'
+gem 'font-awesome-rails'
+# gem 'jquery-ui-rails'
+# gem 'kaminari', git: 'git://github.com/amatsuda/kaminari.git', branch: 'master'
+gem 'sass-rails', '~> 5.0'
+gem "selectize-rails"
+
+
+#---
 # OTHERS
 #---
 
 
 gem 'bcrypt', '~> 3.1.7'
+gem 'faker'
 gem 'jquery-rails'
 gem 'rack-cors', :require => 'rack/cors'
 gem 'strip_attributes'

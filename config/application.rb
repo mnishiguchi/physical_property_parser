@@ -36,5 +36,9 @@ module PhysicalPropertyParser
       g.test_framework :minitest, spec: true, fixture: false
       g.fixture_replacement :factory_girl, dir: 'test/factories'
     end
+
+    #===> Browserify
+    # http://inlehmansterms.net/2016/04/29/modern-javascript-in-rails/
+    config.browserify_rails.commandline_options = '-t [ babelify --presets [ es2015 stage-2 stage-0 ] ]'
   end
 end

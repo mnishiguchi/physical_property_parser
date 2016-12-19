@@ -7,33 +7,33 @@ class PropertyParser
   end
 
   # Relative xpaths to Property node.
-  @@attr_to_xpath_mapping = {
-    marketing_name: "Identification/MarketingName",
-    website:        "Identification/WebSite",
-    description:    "Information/LongDescription",
-    contact_phone:  "Identification/Phone/Number",
-    contact_email:  "Identification/Email",
-    street:         "Identification/Address/Address1",
-    city:           "Identification/Address/City",
-    state:          "Identification/Address/State",
-    zip:            "Identification/Address/Zip",
-    latitude:       "Latitude",
-    longitude:      "Longitude",
-    # file_floorplan: '',
-    # file_property:  "File",
-    # amenities:      "Amenities",
-    # amenities_community: "Amenities/Community",
-    # amenities_floorplan: "Amenities/Floorplan",
-    # pet_dog:             "Policy/Pet",
-    # pet_cat:             "Policy/Pet",
+  @@attr_to_xpaths_mapping = {
+    marketing_name:   [ "Identification/MarketingName" ],
+    website:          [ "Identification/WebSite" ],
+    description:      [ "Information/LongDescription" ],
+    contact_phone:    [ "Identification/Phone/Number" ],
+    contact_email:    [ "Identification/Email" ],
+    street:           [ "Identification/Address/Address1" ],
+    city:             [ "Identification/Address/City" ],
+    state:            [ "Identification/Address/State" ],
+    zip:              [ "Identification/Address/Zip" ],
+    latitude:         [ "Latitude" ],
+    longitude:        [ "Longitude" ],
+    # file_floorplan:   [ '' ],
+    # file_property:    [ "File" ],
+    # amenities:        [ "Amenities" ],
+    # amenities_community: [ "Amenities/Community" ],
+    # amenities_floorplan: [ "Amenities/Floorplan" ],
+    # pet_dog:             [ "Policy/Pet" ],
+    # pet_cat:             [ "Policy/Pet" ],
   }.with_indifferent_access
 
-  def xpath_for_attr_name(attr_name)
-    @@attr_to_xpath_mapping[attr_name].presence
+  def xpaths_for_attr_name(attr_name)
+    @@attr_to_xpaths_mapping[attr_name].presence
   end
 
   def attr_names
-    @@attr_to_xpath_mapping.keys
+    @@attr_to_xpaths_mapping.keys
   end
 
 
@@ -45,45 +45,45 @@ class PropertyParser
 
 
   def marketing_name
-    @property_node.at(xpath_for_attr_name("marketing_name"))&.text
+    @property_node.at(*xpaths_for_attr_name("marketing_name"))&.text
   end
 
   def website
-    @property_node.at(xpath_for_attr_name("website"))&.text
+    @property_node.at(*xpaths_for_attr_name("website"))&.text
   end
 
   def description
-    @property_node.at(xpath_for_attr_name("description"))&.text
+    @property_node.at(*xpaths_for_attr_name("description"))&.text
   end
 
   def contact_phone
-    @property_node.at(xpath_for_attr_name("contact_phone"))&.text
+    @property_node.at(*xpaths_for_attr_name("contact_phone"))&.text
   end
 
   def contact_email
-    @property_node.at(xpath_for_attr_name("contact_email"))&.text
+    @property_node.at(*xpaths_for_attr_name("contact_email"))&.text
   end
 
   def street
-    @property_node.at(xpath_for_attr_name("street"))&.text
+    @property_node.at(*xpaths_for_attr_name("street"))&.text
   end
 
   def city
-    @property_node.at(xpath_for_attr_name("city"))&.text
+    @property_node.at(*xpaths_for_attr_name("city"))&.text
   end
 
   def state
-    @property_node.at(xpath_for_attr_name("state"))&.text
+    @property_node.at(*xpaths_for_attr_name("state"))&.text
   end
 
   def zip
-    @property_node.at(xpath_for_attr_name("zip"))&.text
+    @property_node.at(*xpaths_for_attr_name("zip"))&.text
   end
 
   def amenities
     # Amenity hashes
-    amenity_hashes = @property_node.search(xpath_for_attr_name("amenities")).map do |node|
-      Hash.from_xml(node.to_s)[xpath_for_attr_name("amenities")]
+    amenity_hashes = @property_node.search(*xpaths_for_attr_name("amenities")).map do |node|
+      Hash.from_xml(node.to_s)[*xpaths_for_attr_name("amenities")]
     end.compact
 
     # Find values for the keys Community and Floorplan
@@ -114,21 +114,21 @@ class PropertyParser
   end
 
   def latitude
-    text = @property_node.at(xpath_for_attr_name("latitude"))&.text
+    text = @property_node.at(*xpaths_for_attr_name("latitude"))&.text
     parse_float_string(text)
   end
 
   def longitude
-    text = @property_node.at(xpath_for_attr_name("longitude"))&.text
+    text = @property_node.at(*xpaths_for_attr_name("longitude"))&.text
     parse_float_string(text)
   end
 
   def pet_cat
-    parse_pet_string(xpath_for_attr_name("pet_cat"), /cat/i)
+    parse_pet_string(*xpaths_for_attr_name("pet_cat"), /cat/i)
   end
 
   def pet_dog
-    parse_pet_string(xpath_for_attr_name("pet_dog"), /dog/i)
+    parse_pet_string(*xpaths_for_attr_name("pet_dog"), /dog/i)
   end
 
   # Converts hash to an array of keys for `true` value.

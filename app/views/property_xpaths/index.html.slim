@@ -1,2 +1,15 @@
 h1 PropertyXpaths#index
 p Find me in app/views/property_xpaths/index.html.slim
+
+.property_xpaths
+  .control-group
+    label for="property_xpaths_select"
+      | Tags:
+    = select_tag "property_xpaths_select", options_from_collection_for_select(@feed_xpaths, "id", "xpath"), multiple: true
+
+  javascript:
+    $('#property_xpaths_select').selectize({
+      persist     : false,
+      createOnBlur: true,
+      create      : false
+    });

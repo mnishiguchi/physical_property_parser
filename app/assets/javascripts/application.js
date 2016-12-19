@@ -12,3 +12,4 @@ window.app = window.app || {};
 
 // Expose our browerified modules.
 window.app.selectizeGithubSearch = require('browserify/selectize_github_search');
+window.app.propertyXpaths        = require('browserify/property_xpaths');

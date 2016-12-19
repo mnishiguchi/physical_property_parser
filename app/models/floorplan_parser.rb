@@ -6,6 +6,7 @@ class FloorplanParser
     @floorplan_node = floorplan_node
   end
 
+  # Relative xpaths to Floorplan node.
   @@attr_to_xpath_mapping = {
     name:           "Name",
     square_feet:    "SquareFeet",
@@ -20,11 +21,14 @@ class FloorplanParser
     @@attr_to_xpath_mapping[attr_name].presence
   end
 
+  def attr_names
+    @@attr_to_xpath_mapping.keys
+  end
+
 
   # ---
   # Parsers corresponding to all the individual attribute names.
   # + The method name must match the attribute name.
-  # + Takes in a css path.
   # + Returns a value for the attribute.
   # ---
 

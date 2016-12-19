@@ -20,17 +20,15 @@ class Feed < ApplicationRecord
 
   def create_properties
     property_nodes = Nokogiri::XML(raw_xml).xpath("PhysicalProperty/Property")
+
     property_nodes.each do |property_node|
 
-      # Prepare attributes for property with field-path mapping and xml doc.
       property_attributes = Feed.parse_property_node(property_node)
-
-      # Skip if invalid
       next if property_attributes.blank?
       next if property_attributes.fetch(:marketing_name, nil).blank?
 
       # Debug
-      ap property_attributes
+      # ap property_attributes
 
       print "["
       property = self.properties.create!(property_attributes)
@@ -43,13 +41,7 @@ class Feed < ApplicationRecord
 
     property_node.xpath("Floorplan").each do |floorplan_node|
 
-      # Prepare attributes for floorplan with field-path mapping and xml doc.
       floorplan_attributes = Feed.parse_floorplan_node(floorplan_node)
-
-      # Debug
-      ap floorplan_attributes
-
-      # Skip if invalid
       next if floorplan_attributes.blank?
 
       # # Debug
@@ -60,50 +52,27 @@ class Feed < ApplicationRecord
     end
   end
 
+  def self.parse_property_node(property_node)
+    self.parse_xml_node(property_node, PropertyParser.new(property_node))
+  end
+
+  def self.parse_floorplan_node(floorplan_node)
+    self.parse_xml_node(floorplan_node, FloorplanParser.new(floorplan_node))
+  end
+
+  def self.parse_xml_node(xml_node, parser)
+    {}.with_indifferent_access.tap do |attributes|
+      parser.attr_names.each do |attr_name|
+        attributes[attr_name] = parser.send(attr_name)
+      end
+    end
+  end
+  
   # before_save
   # Save newly occurred xpaths to the FeedXpath table.
   private def save_feed_xpaths
     self.xpaths.each do |xpath|
       FeedXpath.where(xpath: xpath).first_or_create!
     end
-  end
-
-  def self.parse_property_node(property_node)
-    parser = PropertyParser.new(property_node)
-
-    {
-      marketing_name:       parser.marketing_name,
-      website:              parser.website,
-      description:          parser.description,
-      contact_phone:        parser.contact_phone,
-      contact_email:        parser.contact_email,
-      street:               parser.street,
-      city:                 parser.city,
-      state:                parser.state,
-      zip:                  parser.zip,
-      latitude:             parser.latitude,
-      longitude:            parser.longitude,
-      # file_floorplan:       parser.file_floorplan,
-      # file_property:        parser.file_property,
-      # amenities:            parser.amenities,
-      # amenities_community:  parser.amenities_community,
-      # amenities_floorplan:  parser.amenities_floorplan,
-      # pet_dog:              parser.pet_dog,
-      # pet_cat:              parser.pet_cat,
-    }.with_indifferent_access
-  end
-
-  def self.parse_floorplan_node(floorplan_node)
-    parser = FloorplanParser.new(floorplan_node)
-
-    {
-      name:           parser.name,
-      square_feet:    parser.square_feet,
-      market_rent:    parser.market_rent,
-      effective_rent: parser.effective_rent,
-      bedrooms:       parser.bedrooms,
-      bathrooms:      parser.bathrooms,
-      availability:   parser.availability,
-    }.with_indifferent_access
   end
 end

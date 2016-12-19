@@ -6,6 +6,7 @@ class PropertyParser
     @property_node = property_node
   end
 
+  # Relative xpaths to Property node.
   @@attr_to_xpath_mapping = {
     marketing_name: "Identification/MarketingName",
     website:        "Identification/WebSite",
@@ -31,11 +32,14 @@ class PropertyParser
     @@attr_to_xpath_mapping[attr_name].presence
   end
 
+  def attr_names
+    @@attr_to_xpath_mapping.keys
+  end
+
 
   # ---
   # Parsers corresponding to all the individual attribute names.
   # + The method name must match the attribute name.
-  # + Takes in a css path.
   # + Returns a value for the attribute.
   # ---
 

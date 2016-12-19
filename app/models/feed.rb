@@ -27,7 +27,7 @@ class Feed < ApplicationRecord
       next if property_attributes.blank?
       next if property_attributes.fetch(:marketing_name, nil).blank?
 
-      # Debug
+      # #==> Debug
       # ap property_attributes
 
       print "["
@@ -44,7 +44,7 @@ class Feed < ApplicationRecord
       floorplan_attributes = Feed.parse_floorplan_node(floorplan_node)
       next if floorplan_attributes.blank?
 
-      # # Debug
+      # #==> Debug
       # ap floorplan_attributes
 
       print "."
@@ -67,7 +67,7 @@ class Feed < ApplicationRecord
       end
     end
   end
-  
+
   # before_save
   # Save newly occurred xpaths to the FeedXpath table.
   private def save_feed_xpaths

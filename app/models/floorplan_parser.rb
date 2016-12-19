@@ -34,31 +34,31 @@ class FloorplanParser
 
 
   def name
-    @floorplan_node.at(*xpaths_for_attr_name("name"))&.text
+    get_text_for_attr_name(__callee__)
   end
 
   def square_feet
-    @floorplan_node.at(*xpaths_for_attr_name("square_feet"))&.to_s.scan(/\d+/)[0]
+    @floorplan_node.at(*xpaths_for_attr_name(__callee__))&.to_s.scan(/\d+/)[0]
   end
 
   def market_rent
-    parse_rent(*xpaths_for_attr_name("market_rent"))
+    parse_rent(*xpaths_for_attr_name(__callee__))
   end
 
   def effective_rent
-    parse_rent(*xpaths_for_attr_name("effective_rent"))
+    parse_rent(*xpaths_for_attr_name(__callee__))
   end
 
   def bedrooms
-    parse_rooms("bedrooms", /bed.?room/i)
+    parse_rooms(__callee__, /bed.?room/i)
   end
 
   def bathrooms
-    parse_rooms("bathrooms", /bath.?room/i)
+    parse_rooms(__callee__, /bath.?room/i)
   end
 
   def availability
-    @floorplan_node.at(*xpaths_for_attr_name("availability"))&.text
+    get_text_for_attr_name(__callee__)
   end
 
   private def parse_rent(xpath)
@@ -84,5 +84,9 @@ class FloorplanParser
     end
 
     nil
+  end
+
+  private def get_text_for_attr_name(attr_name)
+    @floorplan_node.at(*xpaths_for_attr_name(attr_name))&.text
   end
 end

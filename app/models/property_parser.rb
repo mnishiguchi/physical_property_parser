@@ -45,39 +45,39 @@ class PropertyParser
 
 
   def marketing_name
-    @property_node.at(*xpaths_for_attr_name("marketing_name"))&.text
+    get_text_for_attr_name(__callee__)
   end
 
   def website
-    @property_node.at(*xpaths_for_attr_name("website"))&.text
+    get_text_for_attr_name(__callee__)
   end
 
   def description
-    @property_node.at(*xpaths_for_attr_name("description"))&.text
+    get_text_for_attr_name(__callee__)
   end
 
   def contact_phone
-    @property_node.at(*xpaths_for_attr_name("contact_phone"))&.text
+    get_text_for_attr_name(__callee__)
   end
 
   def contact_email
-    @property_node.at(*xpaths_for_attr_name("contact_email"))&.text
+    get_text_for_attr_name(__callee__)
   end
 
   def street
-    @property_node.at(*xpaths_for_attr_name("street"))&.text
+    get_text_for_attr_name(__callee__)
   end
 
   def city
-    @property_node.at(*xpaths_for_attr_name("city"))&.text
+    get_text_for_attr_name(__callee__)
   end
 
   def state
-    @property_node.at(*xpaths_for_attr_name("state"))&.text
+    get_text_for_attr_name(__callee__)
   end
 
   def zip
-    @property_node.at(*xpaths_for_attr_name("zip"))&.text
+    get_text_for_attr_name(__callee__)
   end
 
   def amenities
@@ -114,12 +114,12 @@ class PropertyParser
   end
 
   def latitude
-    text = @property_node.at(*xpaths_for_attr_name("latitude"))&.text
+    text = get_text_for_attr_name(__callee__)
     parse_float_string(text)
   end
 
   def longitude
-    text = @property_node.at(*xpaths_for_attr_name("longitude"))&.text
+    text = get_text_for_attr_name(__callee__)
     parse_float_string(text)
   end
 
@@ -161,4 +161,7 @@ class PropertyParser
     nil
   end
 
+  private def get_text_for_attr_name(attr_name)
+    @property_node.at(*xpaths_for_attr_name(attr_name))&.text
+  end
 end

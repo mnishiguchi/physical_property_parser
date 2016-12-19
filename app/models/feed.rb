@@ -30,19 +30,19 @@ class Feed < ApplicationRecord
 
       # Skip if invalid
       next if property_attributes.blank?
-      next if property_attributes.fetch("marketing_name", nil).blank?
+      next if property_attributes.fetch(:marketing_name, nil).blank?
 
       # Debug
-      # ap property_attributes
+      ap property_attributes
 
       print "["
-      create_property_with_floorplans(property_attributes, property_node)
+      property = self.properties.create!(property_attributes)
+      create_floorplans_for_property(property, property_node)
       print "]"
     end
   end
 
-  private def create_property_with_floorplans(property_attributes, property_node)
-    property = self.properties.create!(property_attributes)
+  private def create_floorplans_for_property(property, property_node)
 
     property_node.xpath("Floorplan").each do |floorplan_node|
 
@@ -52,10 +52,13 @@ class Feed < ApplicationRecord
                                 floorplan_node
                               ).attributes
 
+      # Debug
+      ap floorplan_attributes
+
       # Skip if invalid
       next if floorplan_attributes.blank?
 
-      # Debug
+      # # Debug
       # ap floorplan_attributes
 
       print "."
@@ -93,6 +96,6 @@ class Feed < ApplicationRecord
       # amenities_floorplan:  parser.amenities_floorplan,
       # pet_dog:              parser.pet_dog,
       # pet_cat:              parser.pet_cat,
-    }
+    }.with_indifferent_access
   end
 end

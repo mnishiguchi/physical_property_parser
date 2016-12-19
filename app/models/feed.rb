@@ -23,10 +23,10 @@ class Feed < ApplicationRecord
     property_nodes.each do |property_node|
 
       # Prepare attributes for property with field-path mapping and xml doc.
-      property_attributes = PropertyAttributes.new(
-                              FeedXpath.for_property,
-                              property_node
-                            ).attributes
+      property_attributes = Feed.parse_property_node(property_node)
+
+      # Debug
+      # ap property_attributes
 
       # Skip if invalid
       next if property_attributes.blank?
@@ -69,5 +69,30 @@ class Feed < ApplicationRecord
     self.xpaths.each do |xpath|
       FeedXpath.where(xpath: xpath).first_or_create!
     end
+  end
+
+  def self.parse_property_node(property_node)
+    parser = PropertyParser.new(property_node)
+
+    {
+      marketing_name:       parser.marketing_name,
+      website:              parser.website,
+      description:          parser.description,
+      contact_phone:        parser.contact_phone,
+      contact_email:        parser.contact_email,
+      street:               parser.street,
+      city:                 parser.city,
+      state:                parser.state,
+      zip:                  parser.zip,
+      latitude:             parser.latitude,
+      longitude:            parser.longitude,
+      # file_floorplan:       parser.file_floorplan,
+      # file_property:        parser.file_property,
+      # amenities:            parser.amenities,
+      # amenities_community:  parser.amenities_community,
+      # amenities_floorplan:  parser.amenities_floorplan,
+      # pet_dog:              parser.pet_dog,
+      # pet_cat:              parser.pet_cat,
+    }
   end
 end

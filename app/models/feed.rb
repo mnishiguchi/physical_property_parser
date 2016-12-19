@@ -25,9 +25,6 @@ class Feed < ApplicationRecord
       # Prepare attributes for property with field-path mapping and xml doc.
       property_attributes = Feed.parse_property_node(property_node)
 
-      # Debug
-      # ap property_attributes
-
       # Skip if invalid
       next if property_attributes.blank?
       next if property_attributes.fetch(:marketing_name, nil).blank?
@@ -47,10 +44,7 @@ class Feed < ApplicationRecord
     property_node.xpath("Floorplan").each do |floorplan_node|
 
       # Prepare attributes for floorplan with field-path mapping and xml doc.
-      floorplan_attributes = FloorplanAttributes.new(
-                                FeedXpath.for_floorplan,
-                                floorplan_node
-                              ).attributes
+      floorplan_attributes = Feed.parse_floorplan_node(floorplan_node)
 
       # Debug
       ap floorplan_attributes
@@ -96,6 +90,20 @@ class Feed < ApplicationRecord
       # amenities_floorplan:  parser.amenities_floorplan,
       # pet_dog:              parser.pet_dog,
       # pet_cat:              parser.pet_cat,
+    }.with_indifferent_access
+  end
+
+  def self.parse_floorplan_node(floorplan_node)
+    parser = FloorplanParser.new(floorplan_node)
+
+    {
+      name:           parser.name,
+      square_feet:    parser.square_feet,
+      market_rent:    parser.market_rent,
+      effective_rent: parser.effective_rent,
+      bedrooms:       parser.bedrooms,
+      bathrooms:      parser.bathrooms,
+      availability:   parser.availability,
     }.with_indifferent_access
   end
 end

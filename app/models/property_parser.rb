@@ -7,28 +7,28 @@ class PropertyParser
   end
 
   @@attr_to_xpath_mapping = {
-    marketing_name: "./Identification/MarketingName",
-    website:        "./Identification/WebSite",
-    description:    "./Information/LongDescription",
-    contact_phone:  "./Identification/Phone/Number",
-    contact_email:  "./Identification/Email",
-    street:         "./Identification/Address/Address1",
-    city:           "./Identification/Address/City",
-    state:          "./Identification/Address/State",
-    zip:            "./Identification/Address/Zip",
-    latitude:       "./Latitude",
-    longitude:      "./Longitude",
+    marketing_name: "Identification/MarketingName",
+    website:        "Identification/WebSite",
+    description:    "Information/LongDescription",
+    contact_phone:  "Identification/Phone/Number",
+    contact_email:  "Identification/Email",
+    street:         "Identification/Address/Address1",
+    city:           "Identification/Address/City",
+    state:          "Identification/Address/State",
+    zip:            "Identification/Address/Zip",
+    latitude:       "Latitude",
+    longitude:      "Longitude",
     # file_floorplan: '',
-    # file_property: "./File",
-    # amenities: "./Amenities",
-    # amenities_community: "./Amenities/Community",
-    # amenities_floorplan: "./Amenities/Floorplan",
-    # pet_dog: "./Policy/Pet",
-    # pet_cat: "./Policy/Pet",
+    # file_property:  "File",
+    # amenities:      "Amenities",
+    # amenities_community: "Amenities/Community",
+    # amenities_floorplan: "Amenities/Floorplan",
+    # pet_dog:             "Policy/Pet",
+    # pet_cat:             "Policy/Pet",
   }.with_indifferent_access
 
   def xpath_for_attr_name(attr_name)
-    @@attr_to_xpath_mapping[attr_name]
+    @@attr_to_xpath_mapping[attr_name].presence
   end
 
 
@@ -38,6 +38,7 @@ class PropertyParser
   # + Takes in a css path.
   # + Returns a value for the attribute.
   # ---
+
 
   def marketing_name
     @property_node.at(xpath_for_attr_name("marketing_name"))&.text
@@ -108,11 +109,6 @@ class PropertyParser
     end
   end
 
-  # Converts hash to an array of keys for `true` value.
-  def true_keys_from_hash(hash)
-    hash&.map { |k,v| k if v =~ TRUE_REGEX }.flatten.compact
-  end
-
   def latitude
     text = @property_node.at(xpath_for_attr_name("latitude"))&.text
     parse_float_string(text)
@@ -123,17 +119,6 @@ class PropertyParser
     parse_float_string(text)
   end
 
-  def parse_float_string(text)
-    return nil unless text
-
-    transformed = text&.gsub(/[^0-9\.\-]/,'')&.to_f
-    (transformed.blank? || transformed == 0.0) ? text : transformed
-  end
-
-  def parse_int_string(text)
-    parse_float_string(text)&.to_i
-  end
-
   def pet_cat
     parse_pet_string(xpath_for_attr_name("pet_cat"), /cat/i)
   end
@@ -142,7 +127,23 @@ class PropertyParser
     parse_pet_string(xpath_for_attr_name("pet_dog"), /dog/i)
   end
 
-  def parse_pet_string(xpath, pet_type_regex)
+  # Converts hash to an array of keys for `true` value.
+  def true_keys_from_hash(hash)
+    hash&.map { |k,v| k if v =~ TRUE_REGEX }.flatten.compact
+  end
+
+  private def parse_float_string(text)
+    return nil unless text
+
+    transformed = text&.gsub(/[^0-9\.\-]/,'')&.to_f
+    (transformed.blank? || transformed == 0.0) ? text : transformed
+  end
+
+  private def parse_int_string(text)
+    parse_float_string(text)&.to_i
+  end
+
+  private def parse_pet_string(xpath, pet_type_regex)
     # 1. Check the text node.
     text = @property_node.at(xpath)&.text
     return text if text =~ pet_type_regex
@@ -155,4 +156,5 @@ class PropertyParser
 
     nil
   end
+
 end

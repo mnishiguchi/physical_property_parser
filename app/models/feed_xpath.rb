@@ -11,4 +11,6 @@
 
 class FeedXpath < ApplicationRecord
   validates :xpath, uniqueness: true
+
+  scope :property, ->() { where("xpath ILIKE ?", "/PhysicalProperty/Property[]/%").order(:xpath) }
 end

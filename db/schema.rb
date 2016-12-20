@@ -23,7 +23,6 @@ ActiveRecord::Schema.define(version: 20161217174154) do
 
   create_table "feed_xpaths", force: :cascade do |t|
     t.string   "xpath"
-    t.string   "type"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

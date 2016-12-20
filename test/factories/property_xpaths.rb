@@ -17,5 +17,17 @@
 #  updated_at     :datetime         not null
 #
 
-class PropertyXpath < ApplicationRecord
+FactoryGirl.define do
+  factory :property_xpath do
+    marketing_name "MyString"
+    website "MyString"
+    description "MyString"
+    contact_phone "MyString"
+    contact_email "MyString"
+    street "MyString"
+    city "MyString"
+    zip "MyString"
+    latitude "MyString"
+    longitude "MyString"
+  end
 end

@@ -8,6 +8,7 @@
 #  updated_at :datetime         not null
 #
 
+# Represents a set of all the uniq xpaths that we have seen in feeds.
 class FeedXpath < ApplicationRecord
   validates :xpath, uniqueness: true
 

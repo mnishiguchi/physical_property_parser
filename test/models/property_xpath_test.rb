@@ -17,5 +17,12 @@
 #  updated_at     :datetime         not null
 #
 
-class PropertyXpath < ApplicationRecord
+require "test_helper"
+
+describe PropertyXpath do
+  let(:property_xpath) { PropertyXpath.new }
+
+  it "must be valid" do
+    value(property_xpath).must_be :valid?
+  end
 end
